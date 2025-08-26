@@ -1,0 +1,63 @@
+import random
+
+class RockPaperScissors:
+    def __init__(self):
+        self.choices = ["rock", "paper", "scissors"]
+        self.user_score = 0
+        self.computer_score = 0
+        self.tie_score = 0
+
+    def get_computer_choice(self):
+        """Randomly select rock, paper, or scissors for the computer."""
+        return random.choice(self.choices)
+
+    def decide_winner(self, user_choice, computer_choice):
+        """Decide the winner and update scores."""
+        if user_choice == computer_choice:
+            self.tie_score += 1
+            return "😐 It's a tie!"
+        elif (user_choice == "rock" and computer_choice == "scissors") or \
+             (user_choice == "paper" and computer_choice == "rock") or \
+             (user_choice == "scissors" and computer_choice == "paper"):
+            self.user_score += 1
+            return "🎉 You win!"
+        else:
+            self.computer_score += 1
+            return "💻 Computer wins!"
+
+    def display_scoreboard(self):
+        """Show current game scores."""
+        print("\n📊 Scoreboard:")
+        print(f"   You: {self.user_score}")
+        print(f"   Computer: {self.computer_score}")
+        print(f"   Ties: {self.tie_score}\n")
+
+    def play(self):
+        """Main game loop."""
+        print("🎮 Welcome to Rock-Paper-Scissors Game!")
+        print("Type 'exit' to quit anytime.\n")
+
+        while True:
+            user_choice = input("Enter your choice (rock/paper/scissors): ").lower()
+
+            if user_choice == "exit":
+                print("\n👋 Thanks for playing!")
+                self.display_scoreboard()
+                break
+
+            if user_choice not in self.choices:
+                print("❌ Invalid choice! Please select rock, paper, or scissors.\n")
+                continue
+
+            computer_choice = self.get_computer_choice()
+            print(f"🤖 Computer chose: {computer_choice}")
+
+            result = self.decide_winner(user_choice, computer_choice)
+            print(result)
+
+            self.display_scoreboard()
+
+
+if __name__ == "__main__":
+    game = RockPaperScissors()
+    game.play()
